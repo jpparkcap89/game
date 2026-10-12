@@ -4,333 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>쌤들의 수업 게임 놀이터</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css">
 <style>
-:root{
-  --theme:#8ba9e8;
-  --ink:#29344c;
-  --muted:#69758a
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  color:var(--ink);
-  font:14px/1.6 system-ui,-apple-system,"Malgun Gothic",sans-serif;
-  background:linear-gradient(130deg,#edf4ff,#fff4ed 55%,#eef9f3);
-  min-height:100vh
-}
-button,input,select,textarea{font:inherit}
-button,.btn{
-  border:1px solid #dce3ef;
-  border-radius:10px;
-  background:#fff;
-  color:var(--ink);
-  padding:8px 12px;
-  cursor:pointer;
-  text-decoration:none;
-  display:inline-flex;
-  justify-content:center;
-  align-items:center;
-  gap:5px
-}
-button:hover,.btn:hover{background:#edf2ff}
-button:disabled{opacity:.55;cursor:wait}
-.primary{
-  background:var(--theme);
-  color:#172744;
-  border-color:transparent
-}
-.danger{color:#ad3346}
-.wrap{width:85%;max-width:1440px;margin:24px auto}
-header,.row,.toolbar{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  flex-wrap:wrap
-}
-header{justify-content:space-between}
-h1{font-size:24px;margin:0}
-h2{font-size:20px;margin:0 0 12px}
-h3{font-size:17px;margin:0}
-p{margin:6px 0}
-.muted{color:var(--muted)}
-.intro{padding:20px 0}
-.toolbar{
-  padding:12px;
-  background:#ffffffc9;
-  border:1px solid #fff;
-  border-radius:16px;
-  margin-bottom:12px
-}
-input,select,textarea{
-  width:100%;
-  border:1px solid #d7deea;
-  border-radius:9px;
-  background:#fff;
-  color:var(--ink);
-  padding:8px 10px
-}
-input:focus,select:focus,textarea:focus{
-  outline:2px solid var(--theme);
-  outline-offset:1px
-}
-textarea{min-height:95px;resize:vertical}
-.toolbar input{flex:1;min-width:160px}
-.toolbar select{width:auto;max-width:100%}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:15px
-}
-.card{
-  overflow:hidden;
-  background:#fff;
-  border:1px solid #e3e9f4;
-  border-radius:18px;
-  box-shadow:0 6px 20px #344e6b08;
-  display:flex;
-  flex-direction:column
-}
-.cover{
-  width:100%;
-  aspect-ratio:16/9;
-  background:linear-gradient(120deg,#e5edff,#fce9f1);
-  object-fit:cover
-}
-.placeholder{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:55px
-}
-.body{
-  padding:14px;
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  gap:7px
-}
-.clamp{
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-  overflow:hidden
-}
-.tags{display:flex;gap:4px;flex-wrap:wrap}
-.tag{
-  font-size:12px;
-  padding:2px 8px;
-  border-radius:20px;
-  background:#eef3ff
-}
-.rating{color:#9b701b}
-.actions{
-  margin-top:auto;
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px
-}
-.empty{
-  padding:35px;
-  text-align:center;
-  background:#ffffffa8;
-  border-radius:14px;
-  grid-column:1/-1
-}
-.pager{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin:20px
-}
-.panel{
-  background:#ffffffd9;
-  padding:16px;
-  border-radius:16px;
-  margin-top:15px
-}
-.adminrow{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:9px 0;
-  border-bottom:1px solid #e9edf5;
-  flex-wrap:wrap
-}
-.adminrow .grow{
-  flex:1;
-  min-width:150px;
-  overflow-wrap:anywhere
-}
-.tabs{
-  display:flex;
-  flex-wrap:wrap;
-  gap:5px;
-  margin-bottom:12px
-}
-.tabs .active{background:var(--theme)}
-footer{
-  text-align:center;
-  color:var(--muted);
-  padding:25px
-}
-.pre{white-space:pre-wrap;overflow-wrap:anywhere}
-dialog{
-  width:min(720px,94vw);
-  border:0;
-  border-radius:18px;
-  padding:0;
-  color:var(--ink);
-  box-shadow:0 15px 70px #17274530;
-  max-height:90vh
-}
-dialog::backdrop{background:#18284366}
-.modalhead{
-  padding:14px 18px;
-  border-bottom:1px solid #e6ebf3;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px
-}
-.modalhead h2{margin:0}
-.modalbody{
-  padding:18px;
-  overflow-y:auto;
-  max-height:calc(90vh - 80px)
-}
-.formgrid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:11px
-}
-label{display:block;font-weight:600}
-label input,label select,label textarea{
-  display:block;
-  margin-top:4px;
-  font-weight:400
-}
-.wide{grid-column:1/-1}
-.formfoot{
-  position:sticky;
-  bottom:-18px;
-  background:white;
-  padding:12px 0 0;
-  display:flex;
-  justify-content:flex-end;
-  gap:8px
-}
-.stars button{
-  font-size:32px;
-  padding:0 6px;
-  color:#c49420;
-  border:0
-}
-.stars button[aria-pressed="true"]{background:#fff3cf}
-.detailimg{
-  width:100%;
-  max-height:300px;
-  object-fit:contain;
-  border-radius:12px
-}
-.toast{
-  position:fixed;
-  bottom:24px;
-  left:50%;
-  transform:translateX(-50%);
-  padding:11px 18px;
-  border-radius:12px;
-  color:white;
-  background:#34445e;
-  z-index:100;
-  width:max-content;
-  max-width:90vw;
-  box-shadow:0 4px 20px #0002
-}
-.hidden{display:none!important}
-small{font-weight:400}
-.notice{
-  background:#fff8e8;
-  padding:10px;
-  border-radius:10px;
-  margin:10px 0
-}
-a{color:#37579b}
-button:focus-visible,a:focus-visible{
-  outline:3px solid var(--theme)
-}
-@media(max-width:1000px){
-  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-width:650px){
-  .wrap{width:100%;padding:0 12px;margin:16px auto}
-  .grid{grid-template-columns:1fr}
-  .formgrid{grid-template-columns:1fr}
-  .wide{grid-column:auto}
-  h1{font-size:21px}
-  .toolbar select{flex:1}
-  .modalbody{padding:14px}
-  .formfoot{bottom:-14px}
-}
+
+:root{--theme:#6dafa1;--ink:#31545a;--muted:#738c94;--line:#dce8ec;--radius:24px}
+*{box-sizing:border-box}body{margin:0;color:var(--ink);font:14px/1.65 "Pretendard",-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic",sans-serif;background:linear-gradient(120deg,#edf9f5 0%,#edf5ff 46%,#f7f0ff 82%,#fff5ee);-webkit-font-smoothing:antialiased;word-break:keep-all;min-height:100vh;border-top:4px solid #bdd7c4}
+button,input,select,textarea{font:inherit}button,.btn{border:1px solid var(--line);border-radius:12px;background:#ffffffdf;color:var(--ink);padding:9px 13px;cursor:pointer;text-decoration:none;display:inline-flex;justify-content:center;align-items:center;gap:6px;transition:background .15s,transform .15s}button:hover,.btn:hover{background:#eaf5f1;transform:translateY(-1px)}button:disabled{opacity:.55;cursor:wait;transform:none}.primary{background:linear-gradient(120deg,var(--theme),#5b9da8);color:#fff;border-color:transparent;font-weight:750}.danger{color:#b85164}.wrap{width:85%;max-width:1440px;margin:24px auto}.community{width:max-content;max-width:100%;margin:0 auto 17px;padding:5px 13px;background:#ffffffbd;border:1px solid var(--line);border-radius:30px;font-size:12px;color:#548b80}.brand{display:flex;align-items:center;gap:12px}.brandicon,.miniicon{display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:16px;background:#d7f0e9}.brandicon{width:52px;height:52px;font-size:26px}.miniicon{width:37px;height:37px;font-size:19px;border-radius:12px}.blue{background:#dfedff}.purple{background:#eee5ff}header,.row,.toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap}header{justify-content:space-between}h1{font-size:23px;margin:0;font-weight:800;letter-spacing:-.8px}h2{font-size:22px;margin:0 0 10px;font-weight:800;letter-spacing:-.7px}h3{font-size:17px;margin:0;font-weight:750;letter-spacing:-.4px}p{margin:6px 0}.muted{color:var(--muted)}.hero{position:relative;overflow:hidden;margin:18px 0 12px;padding:26px;border-radius:28px;border:1px solid #d6e7e8;background:linear-gradient(105deg,#dff5eb,#e6f2ff 52%,#f3eaff);box-shadow:0 12px 25px #31545a06}.hero h2{font-size:27px;max-width:85%;margin:9px 0}.herotag{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:30px;background:#ffffffb8;font-size:12px;color:#568b7d}.hero p{max-width:85%}.heroart{position:absolute;right:28px;top:24px;font-size:68px;opacity:.2;transform:rotate(-12deg)}.features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:22px}.feature{display:flex;align-items:center;gap:10px;padding:11px 13px;border:1px solid #e1e9ee;background:#ffffffa8;border-radius:16px}.feature strong{font-size:12px;display:block}.feature small{font-size:11px;color:var(--muted)}.toolbar{padding:12px;background:#ffffffbd;border:1px solid #dfe9ec;border-radius:18px;margin-bottom:12px}.searchbox{display:flex;align-items:center;gap:9px;flex:1;min-width:180px;padding:0 11px;background:#fff;border:1px solid var(--line);border-radius:12px}.searchbox input{border:0;background:transparent;padding:10px 0;min-width:0}.filter{display:flex;align-items:center;gap:6px;font-weight:400}.filter select{width:auto;max-width:190px}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:12px;background:#ffffff;color:var(--ink);padding:9px 11px}input:focus,select:focus,textarea:focus{outline:2px solid #9bc8bd;outline-offset:1px}textarea{min-height:105px;resize:vertical}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{overflow:hidden;padding:8px;background:#ffffffed;border:1px solid #dfe8ec;border-radius:24px;box-shadow:0 8px 25px #344e6b06;display:flex;flex-direction:column;transition:box-shadow .2s}.card:hover{box-shadow:0 12px 28px #344e6b12}.cover{width:100%;aspect-ratio:16/9;border-radius:17px;display:block;background:linear-gradient(120deg,#e1f3ea,#e7edff 55%,#f5e8f3);object-fit:cover}.placeholder{display:flex;align-items:center;justify-content:center;font-size:54px}.body{padding:12px 8px 8px;flex:1;display:flex;flex-direction:column;gap:8px}.clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.tags{display:flex;gap:5px;flex-wrap:wrap}.tag{font-size:11px;padding:3px 8px;border-radius:8px;background:#edf5f0;color:#5a847c}.tag:nth-child(2n){background:#edf2ff;color:#6b7ea1}.tag:nth-child(3n){background:#f4edfc;color:#9280a6}.rating{color:#b9893a;font-size:13px}.actions{margin-top:auto;padding-top:3px;display:flex;flex-wrap:wrap;gap:6px}.actions .btn{background:#e5f4ed;color:#49786c;border-color:#d6eade}.actions button{font-size:12px}.empty{padding:35px;text-align:center;background:#ffffffa8;border:1px solid var(--line);border-radius:20px;grid-column:1/-1}.pager{display:flex;align-items:center;justify-content:center;gap:10px;margin:20px}.panel{background:#ffffffdd;border:1px solid var(--line);padding:16px;border-radius:20px;margin-top:15px}.adminrow{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #e9edf5;flex-wrap:wrap}.adminrow .grow{flex:1;min-width:150px;overflow-wrap:anywhere}.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}.tabs .active{background:#dff0e8;border-color:#bcdccd}.tabs button{font-size:13px}footer{text-align:center;color:var(--muted);padding:28px;font-size:12px}.pre{white-space:pre-wrap;overflow-wrap:anywhere}dialog{width:min(740px,94vw);border:1px solid #dbe8e7;border-radius:24px;padding:0;color:var(--ink);box-shadow:0 20px 80px #24474d30;max-height:90vh}dialog::backdrop{background:#23414866;backdrop-filter:blur(3px)}.modalhead{padding:14px 18px;background:#f3faf7;border-bottom:1px solid #e0ece8;display:flex;align-items:center;justify-content:space-between;gap:8px}.modalhead h2{font-size:19px;margin:0}.modalbody{padding:18px;overflow-y:auto;max-height:calc(90vh - 78px)}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{display:block;font-weight:600;font-size:13px}label input,label select,label textarea{display:block;margin-top:5px;font-weight:400}.wide{grid-column:1/-1}.formfoot{position:sticky;bottom:-18px;background:#fff;padding:12px 0 0;display:flex;justify-content:flex-end;gap:8px}.stars button{font-size:32px;padding:0 6px;color:#c49420;border:0}.stars button[aria-pressed="true"]{background:#fff3cf}.detailimg{width:100%;max-height:330px;object-fit:contain;border-radius:16px;background:#f4f8f7}.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:11px 18px;border-radius:14px;color:white;background:#34555d;z-index:100;width:max-content;max-width:90vw;box-shadow:0 4px 20px #0002}.hidden{display:none!important}small{font-weight:400}.notice{background:#fff8e9;padding:11px;border-radius:12px;margin:10px 0}a{color:#528e84}button:focus-visible,a:focus-visible,.uploadbox:focus-visible{outline:3px solid #92c6b7;outline-offset:2px}.uploadbox{border:2px dashed #c4ded5;border-radius:18px;padding:16px;background:#f5fbf8;text-align:center;outline:none}.uploadbox.dragover{border-color:#6da996;background:#e5f5ed}.uploadicon{font-size:30px}.uploadbuttons{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin:9px 0}.shotpreview{max-width:100%;max-height:180px;object-fit:contain;border-radius:12px;margin:7px auto;display:block}.uploadmeta{font-size:12px;color:#79928a;margin-top:6px}.imagelink{margin-top:10px;text-align:left}.imagelink summary{cursor:pointer;color:#6b8d86;font-size:12px}.imagelink input{margin-top:7px}.countline{display:flex;justify-content:space-between;align-items:center;margin:14px 0 10px}.sectiontitle{font-size:16px;font-weight:700}.sectiontitle span{color:#8eb8aa}#count{font-size:12px;margin:0}.row button{font-size:13px}@media(max-width:1100px){.toolbar{align-items:stretch}.searchbox{flex-basis:100%}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:650px){.wrap{width:100%;padding:0 12px;margin:16px auto}.grid,.features,.formgrid{grid-template-columns:1fr}.features{gap:6px}.feature{padding:8px 11px}.hero{padding:18px;border-radius:24px}.hero h2{font-size:22px;max-width:90%}.hero p{max-width:100%;font-size:12px}.heroart{font-size:45px;right:10px;top:18px;opacity:.13}.wide{grid-column:auto}h1{font-size:20px}.brandicon{width:42px;height:42px;font-size:23px}.brand{gap:8px}.community{font-size:11px}.filter{flex:1}.filter select{width:100%;max-width:100%;min-width:0}.modalbody{padding:14px}.formfoot{bottom:-14px}.countline{gap:8px}.sectiontitle{font-size:14px}}
+
 </style>
 </head>
 <body>
 <main class="wrap">
-  <header>
-    <div>
-      <h1 id="appName">🎮 쌤들의 수업 게임 놀이터</h1>
-      <p id="description" class="muted"></p>
-    </div>
-    <div class="row">
-      <button id="recommend">＋ 게임 추천</button>
-      <button id="refresh" aria-label="새로고침">↻</button>
-      <button id="adminBtn" aria-label="관리자 로그인">⚙</button>
-      <button id="logout" class="hidden">로그아웃</button>
-    </div>
-  </header>
-
-  <section class="intro">
-    <h2>수업에 재미를 더하는 게임을 찾아보세요</h2>
-    <p class="muted">
-      게임을 실행하고, 문제 템플릿을 활용하고,
-      수업 경험을 별점으로 나눠 주세요.
-    </p>
-  </section>
-
-  <section class="toolbar" aria-label="게임 검색">
-    <input id="search"
-      placeholder="게임 이름 · 소개 · 제작자 검색"
-      aria-label="검색어">
-    <select id="category" aria-label="게임 유형">
-      <option value="">모든 유형</option>
-    </select>
-    <select id="grade" aria-label="추천 학년">
-      <option value="">모든 학년</option>
-    </select>
-    <select id="sort" aria-label="정렬">
-      <option value="latest">최신순</option>
-      <option value="rating">별점 높은 순</option>
-      <option value="count">평가 많은 순</option>
-      <option value="featured">추천·표시 순서</option>
-    </select>
-  </section>
-
-  <p id="count" class="muted" aria-live="polite"></p>
-
-  <section id="games" class="grid">
-    <div class="empty">불러오는 중…</div>
-  </section>
-
-  <nav id="pager" class="pager" aria-label="페이지 이동"></nav>
-
-  <section id="adminPanel" class="panel hidden">
-    <h2>⚙ 관리자</h2>
-    <div id="tabs" class="tabs"></div>
-    <div id="adminContent"></div>
-  </section>
-
-  <footer id="footer"></footer>
-</main>
-
+<div class="community">🌱 선생님들이 함께 만드는 수업 놀이터</div>
+<header><div class="brand"><div class="brandicon" aria-hidden="true">🎮</div><div><h1 id="appName">쌤들의 수업 게임 놀이터</h1><p id="description" class="muted"></p></div></div><div class="row"><button id="recommend">🎁 게임 추천</button><button id="refresh" aria-label="새로고침">↻</button><button id="adminBtn" aria-label="관리자 로그인">⚙️</button><button id="logout" class="hidden">🚪 로그아웃</button></div></header>
+<section class="hero"><span class="herotag">✨ 재미있는 수업, 함께 나누는 아이디어</span><div class="heroart" aria-hidden="true">🕹️</div><h2>오늘 수업에 어떤 게임을 더해 볼까요?</h2><p class="muted">선생님들이 만든 교육용 게임을 만나 보세요.<br>내 수업에 맞는 문제를 준비하고, 아이들과 즐겁게 배우는 시간을 만들어 보세요.</p></section>
+<section class="features" aria-label="놀이터 활용 안내"><div class="feature"><span class="miniicon" aria-hidden="true">🎮</span><div><strong>수업에 바로 활용</strong><small>마음에 드는 게임을 새 창으로 실행해요.</small></div></div><div class="feature"><span class="miniicon blue" aria-hidden="true">📋</span><div><strong>문제 템플릿 나눔</strong><small>내 수업에 맞게 문제를 준비해요.</small></div></div><div class="feature"><span class="miniicon purple" aria-hidden="true">⭐</span><div><strong>수업 경험을 별점으로</strong><small>좋았던 게임을 다른 선생님께 알려요.</small></div></div></section>
+<section class="toolbar" aria-label="게임 검색"><div class="searchbox"><span aria-hidden="true">🔎</span><input id="search" placeholder="게임 이름 · 소개 · 제작자를 검색해 보세요" aria-label="검색어"></div><label class="filter"><span aria-hidden="true">🧩</span><select id="category" aria-label="게임 유형"><option value="">모든 유형</option></select></label><label class="filter"><span aria-hidden="true">🎒</span><select id="grade" aria-label="추천 학년"><option value="">모든 학년</option></select></label><label class="filter"><span aria-hidden="true">↕</span><select id="sort" aria-label="정렬"><option value="latest">최신순</option><option value="rating">별점 높은 순</option><option value="count">평가 많은 순</option><option value="featured">추천·표시 순서</option></select></label></section>
+<div class="countline"><div class="sectiontitle"><span>✦</span> 함께 나누는 수업 게임</div><p id="count" class="muted" aria-live="polite"></p></div><section id="games" class="grid"><div class="empty">🌿 게임을 불러오는 중…</div></section><nav id="pager" class="pager" aria-label="페이지 이동"></nav>
+<section id="adminPanel" class="panel hidden"><h2>⚙️ 놀이터 관리</h2><div id="tabs" class="tabs"></div><div id="adminContent"></div></section><footer id="footer"></footer></main>
 <dialog id="modal" aria-labelledby="modalTitle">
   <div class="modalhead">
     <h2 id="modalTitle"></h2>
@@ -345,6 +36,14 @@ button:focus-visible,a:focus-visible{
 <script>
 // GitHub에서는 실제 GAS 배포 /exec 주소로 변경하세요.
 // GAS 내부 실행에서는 사용하지 않습니다.
+function makeId() {
+  if (window.crypto && typeof crypto.randomUUID === 'function') return crypto.randomUUID();
+  const bytes = new Uint8Array(16); crypto.getRandomValues(bytes);
+  return Array.from(bytes, b => b.toString(16).padStart(2,'0')).join('');
+}
+// HTTP로 들어온 커스텀 도메인은 HTTPS로 전환합니다.
+if (location.hostname === 'game.cap89.com' && location.protocol === 'http:') location.replace('https://' + location.host + location.pathname + location.search + location.hash);
+
 const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxqPAHDWUfSONWaItyO6aa_CRLpi6ccL2Hvgkr6m8BBc0bv-lISvLStOaVpTODfXyVxdQ/exec';
 
 const $ = id => document.getElementById(id);
@@ -394,11 +93,11 @@ try {
   visitorId = localStorage.getItem('gameVisitor');
 
   if (!/^[a-zA-Z0-9_-]{16,100}$/.test(visitorId || '')) {
-    visitorId = crypto.randomUUID();
+    visitorId = makeId();
     localStorage.setItem('gameVisitor', visitorId);
   }
 } catch (e) {
-  visitorId = crypto.randomUUID();
+  visitorId = makeId();
 }
 
 let state = {
@@ -522,7 +221,7 @@ async function rpc(name, ...args) {
   await connectBridge();
 
   return new Promise((resolve, reject) => {
-    const id = crypto.randomUUID();
+    const id = makeId();
 
     const timer = setTimeout(() => {
       pending.delete(id);
@@ -649,22 +348,59 @@ function foot(label = '저장') {
 
 function bindForm(handler) {
   const form = $('modalBody').querySelector('form');
-
-  form.querySelector('[data-close]')
-    ?.addEventListener('click', closeModal);
-
+  const uploader = bindScreenshot(form);
+  form.querySelector('[data-close]')?.addEventListener('click', closeModal);
   form.onsubmit = e => {
     e.preventDefault();
-
-    busy(
-      form.querySelector('[type=submit]'),
-      () => handler(
-        Object.fromEntries(new FormData(form))
-      )
-    );
+    if (uploader && uploader.processing()) { toast('이미지를 준비하는 중입니다. 잠시만 기다려 주세요.'); return; }
+    const data = Object.fromEntries(new FormData(form));
+    if (uploader) data.imageData = uploader.getData();
+    busy(form.querySelector('[type=submit]'), () => handler(data));
   };
 }
-
+function screenshotFields(url='') {
+  return `<div class="wide"><label>🖼️ 게임 스크린샷 <small>(선택)</small></label><div class="uploadbox" id="shotZone" tabindex="0" aria-label="스크린샷 붙여넣기 영역"><div class="uploadicon" aria-hidden="true">📸</div><strong>게임 화면을 보여 주세요</strong><p class="muted">이 영역을 클릭한 뒤 <b>Ctrl+V</b>로 붙여넣거나<br>이미지 파일을 끌어다 놓으세요.</p><input type="file" id="shotFile" accept="image/png,image/jpeg,image/webp" hidden><div class="uploadbuttons"><button type="button" id="shotPick">📁 파일 선택</button><button type="button" id="shotRemove">✕ 이미지 제거</button></div><img id="shotPreview" class="shotpreview hidden" alt="첨부 이미지 미리보기"><div id="shotMeta" class="uploadmeta" aria-live="polite">PNG · JPG · WebP / 원본 15MB 이하 · 자동 크기 조정</div><details class="imagelink"><summary>🔗 이미지 링크로 등록하기</summary><input name="imageUrl" type="url" value="${esc(url)}" placeholder="https://…" aria-label="이미지 링크"></details></div></div>`;
+}
+async function prepareScreenshot(file) {
+  if (!file || !['image/png','image/jpeg','image/webp'].includes(file.type)) throw new Error('PNG, JPG, WebP 이미지를 선택해 주세요.');
+  if (file.size > 15*1024*1024) throw new Error('원본 이미지는 15MB 이하로 선택해 주세요.');
+  const objectUrl = URL.createObjectURL(file);
+  try {
+    const img = await new Promise((resolve,reject) => { const i=new Image();i.onload=()=>resolve(i);i.onerror=()=>reject(new Error('이미지 파일을 읽을 수 없습니다.'));i.src=objectUrl; });
+    if (!img.naturalWidth || !img.naturalHeight || img.naturalWidth*img.naturalHeight>60000000) throw new Error('이미지 크기가 너무 큽니다. 조금 작게 캡처해 주세요.');
+    const canvas=document.createElement('canvas'),scale=Math.min(1,1600/img.naturalWidth,1200/img.naturalHeight);
+    canvas.width=Math.max(1,Math.round(img.naturalWidth*scale));canvas.height=Math.max(1,Math.round(img.naturalHeight*scale));
+    const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
+    const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',.9));
+    if(!blob || blob.size>2*1024*1024) throw new Error('변환 이미지가 2MB를 초과합니다. 조금 작게 캡처해 주세요.');
+    const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(new Error('이미지를 변환하지 못했습니다.'));reader.readAsDataURL(blob);});
+    return {data,width:canvas.width,height:canvas.height,size:blob.size};
+  } finally { URL.revokeObjectURL(objectUrl); }
+}
+function bindScreenshot(form) {
+  const zone=form.querySelector('#shotZone');if(!zone)return null;
+  const fileInput=form.querySelector('#shotFile'),preview=form.querySelector('#shotPreview'),meta=form.querySelector('#shotMeta'),urlInput=form.querySelector('[name=imageUrl]');
+  let imageData='',preparing=false,sequence=0;
+  function show(source){preview.src=source||'';preview.classList.toggle('hidden',!source);}
+  preview.onerror=()=>{preview.classList.add('hidden');meta.textContent='이미지 링크를 확인하거나 새 파일을 선택해 주세요.';};
+  if(urlInput.value)show(imageUrl(urlInput.value));
+  async function accept(file){
+    if(modalBusy)return;
+    const current=++sequence;preparing=true;meta.textContent='🌿 이미지를 준비하는 중…';
+    try {const prepared=await prepareScreenshot(file);if(current!==sequence || !form.isConnected)return;imageData=prepared.data;urlInput.value='';urlInput.readOnly=true;show(imageData);meta.textContent=`✓ ${prepared.width} × ${prepared.height} · ${Math.round(prepared.size/1024)}KB · 저장할 때 업로드됩니다.`;}
+    catch(e){if(current===sequence && form.isConnected){meta.textContent=e.message;toast(e.message);}}
+    finally{if(current===sequence)preparing=false;}
+  }
+  form.querySelector('#shotPick').onclick=()=>{if(!modalBusy)fileInput.click();};
+  fileInput.onchange=()=>{const file=fileInput.files[0];fileInput.value='';if(file)accept(file);};
+  form.querySelector('#shotRemove').onclick=()=>{if(modalBusy)return;sequence++;preparing=false;imageData='';urlInput.value='';urlInput.readOnly=false;show('');meta.textContent='이미지를 제거했습니다. 새 파일 또는 링크를 넣을 수 있습니다.';};
+  urlInput.oninput=()=>{if(modalBusy)return;imageData='';show(imageUrl(urlInput.value));};
+  form.addEventListener('paste',e=>{const item=Array.from(e.clipboardData?.items||[]).find(i=>i.kind==='file' && i.type.startsWith('image/'));if(!item)return;e.preventDefault();const file=item.getAsFile();if(file)accept(file);});
+  zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('dragover');});
+  zone.addEventListener('dragleave',()=>zone.classList.remove('dragover'));
+  zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('dragover');const file=Array.from(e.dataTransfer.files||[]).find(f=>f.type.startsWith('image/'));if(file)accept(file);else toast('이미지 파일을 끌어다 놓아 주세요.');});
+  return {getData:()=>imageData,processing:()=>preparing};
+}
 async function load(initial = false) {
   if (loading) return;
 
@@ -680,7 +416,7 @@ async function load(initial = false) {
     document.title =
       s.appName || '쌤들의 수업 게임 놀이터';
 
-    $('appName').textContent = '🎮 ' + document.title;
+    $('appName').textContent = document.title;
     $('description').textContent = s.siteDescription;
     $('footer').textContent = s.footerText;
 
@@ -864,9 +600,9 @@ function render() {
             }
 
             <div class="actions">
-              ${link(g.gameUrl, '게임 실행')}
+              ${link(g.gameUrl, '🎮 게임 실행')}
               <button data-detail="${esc(g.gameId)}">
-                소개·템플릿${state.settings.enableRatings
+                📖 소개·템플릿${state.settings.enableRatings
                   ? '·평가'
                   : ''}
               </button>
@@ -946,7 +682,7 @@ async function detail(id) {
       : ''
     }
 
-    <p>${link(g.gameUrl, '게임 실행')}</p>
+    <p>${link(g.gameUrl, '🎮 게임 실행')}</p>
 
     ${state.settings.showTemplates
       ? `<h3>📋 문제 템플릿</h3>
@@ -1053,7 +789,7 @@ function gameFields(g = {}, recommend = false) {
   ).map(c => [
     c.categoryId,
     c.categoryName +
-      (yes(c.isActive) ? '' : ' (비활성)')
+      (!recommend && !yes(c.isActive) ? ' (비활성)' : '')
   ]);
 
   let html =
@@ -1078,10 +814,7 @@ function gameFields(g = {}, recommend = false) {
       'gameUrl', '게임 실행 링크',
       g.gameUrl, true, 'url'
     ) +
-    input(
-      'imageUrl', '스크린샷 이미지 링크',
-      g.imageUrl, false, 'url'
-    ) +
+    screenshotFields(g.imageUrl) +
     input('creatorSchool', '제작자 소속', g.creatorSchool) +
     input(
       'creatorUrl', '제작자 홈페이지',
@@ -1136,7 +869,7 @@ $('recommend').onclick = () => {
         ? '관리자 승인 후 공개됩니다.'
         : '추천 즉시 공개됩니다.'}
       제작자와 출처를 정확히 입력해 주세요.
-      스크린샷은 누구나 볼 수 있는 이미지 링크를 입력합니다.
+      스크린샷은 파일 선택 또는 Ctrl+V로 붙여넣을 수 있습니다.
     </p>
     <form>
       <div class="formgrid">
@@ -1225,14 +958,7 @@ async function refreshAdmin() {
   }
 }
 
-const tabs = {
-  games: '게임',
-  templates: '문제 템플릿',
-  categories: '게임 유형',
-  submissions: '추천 승인',
-  ratings: '별점',
-  settings: '기본 설정'
-};
+const tabs = {games:'🎮 게임',templates:'📋 문제 템플릿',categories:'🧩 게임 유형',submissions:'📬 추천 승인',ratings:'⭐ 별점',settings:'⚙️ 기본 설정'};
 
 const statusName = {
   PUBLISHED: '공개',
@@ -1566,7 +1292,7 @@ function settingsForm() {
     appVersion: '앱 버전',
     gamesPerPage: '페이지당 게임 수',
     footerText: '하단 문구',
-    imageFolderId: 'Drive 이미지 폴더 ID (예약 설정)'
+    imageFolderId: '스크린샷 저장 폴더 ID'
   };
 
   let fields = Object.entries(labels)
@@ -1631,8 +1357,8 @@ function settingsForm() {
   openModal('기본 설정', `
     <p class="muted">
       비밀번호를 변경하면 다시 로그인해야 합니다.
-      이미지 폴더 ID는 기존 DB와의 호환을 위해 보존하며,
-      이 버전은 이미지 링크 등록 방식입니다.
+      스크린샷 저장 폴더는 처음 실행할 때 자동으로 만들어집니다.
+      업로드 이미지는 링크가 있는 누구나 볼 수 있도록 저장됩니다.
     </p>
     <form>
       <div class="formgrid">
