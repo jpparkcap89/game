@@ -1,1 +1,1688 @@
-Arrive soon...
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>쌤들의 수업 게임 놀이터</title>
+<style>
+:root{
+  --theme:#8ba9e8;
+  --ink:#29344c;
+  --muted:#69758a
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  color:var(--ink);
+  font:14px/1.6 system-ui,-apple-system,"Malgun Gothic",sans-serif;
+  background:linear-gradient(130deg,#edf4ff,#fff4ed 55%,#eef9f3);
+  min-height:100vh
+}
+button,input,select,textarea{font:inherit}
+button,.btn{
+  border:1px solid #dce3ef;
+  border-radius:10px;
+  background:#fff;
+  color:var(--ink);
+  padding:8px 12px;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:5px
+}
+button:hover,.btn:hover{background:#edf2ff}
+button:disabled{opacity:.55;cursor:wait}
+.primary{
+  background:var(--theme);
+  color:#172744;
+  border-color:transparent
+}
+.danger{color:#ad3346}
+.wrap{width:85%;max-width:1440px;margin:24px auto}
+header,.row,.toolbar{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap
+}
+header{justify-content:space-between}
+h1{font-size:24px;margin:0}
+h2{font-size:20px;margin:0 0 12px}
+h3{font-size:17px;margin:0}
+p{margin:6px 0}
+.muted{color:var(--muted)}
+.intro{padding:20px 0}
+.toolbar{
+  padding:12px;
+  background:#ffffffc9;
+  border:1px solid #fff;
+  border-radius:16px;
+  margin-bottom:12px
+}
+input,select,textarea{
+  width:100%;
+  border:1px solid #d7deea;
+  border-radius:9px;
+  background:#fff;
+  color:var(--ink);
+  padding:8px 10px
+}
+input:focus,select:focus,textarea:focus{
+  outline:2px solid var(--theme);
+  outline-offset:1px
+}
+textarea{min-height:95px;resize:vertical}
+.toolbar input{flex:1;min-width:160px}
+.toolbar select{width:auto;max-width:100%}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:15px
+}
+.card{
+  overflow:hidden;
+  background:#fff;
+  border:1px solid #e3e9f4;
+  border-radius:18px;
+  box-shadow:0 6px 20px #344e6b08;
+  display:flex;
+  flex-direction:column
+}
+.cover{
+  width:100%;
+  aspect-ratio:16/9;
+  background:linear-gradient(120deg,#e5edff,#fce9f1);
+  object-fit:cover
+}
+.placeholder{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:55px
+}
+.body{
+  padding:14px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:7px
+}
+.clamp{
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden
+}
+.tags{display:flex;gap:4px;flex-wrap:wrap}
+.tag{
+  font-size:12px;
+  padding:2px 8px;
+  border-radius:20px;
+  background:#eef3ff
+}
+.rating{color:#9b701b}
+.actions{
+  margin-top:auto;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px
+}
+.empty{
+  padding:35px;
+  text-align:center;
+  background:#ffffffa8;
+  border-radius:14px;
+  grid-column:1/-1
+}
+.pager{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:20px
+}
+.panel{
+  background:#ffffffd9;
+  padding:16px;
+  border-radius:16px;
+  margin-top:15px
+}
+.adminrow{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 0;
+  border-bottom:1px solid #e9edf5;
+  flex-wrap:wrap
+}
+.adminrow .grow{
+  flex:1;
+  min-width:150px;
+  overflow-wrap:anywhere
+}
+.tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-bottom:12px
+}
+.tabs .active{background:var(--theme)}
+footer{
+  text-align:center;
+  color:var(--muted);
+  padding:25px
+}
+.pre{white-space:pre-wrap;overflow-wrap:anywhere}
+dialog{
+  width:min(720px,94vw);
+  border:0;
+  border-radius:18px;
+  padding:0;
+  color:var(--ink);
+  box-shadow:0 15px 70px #17274530;
+  max-height:90vh
+}
+dialog::backdrop{background:#18284366}
+.modalhead{
+  padding:14px 18px;
+  border-bottom:1px solid #e6ebf3;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px
+}
+.modalhead h2{margin:0}
+.modalbody{
+  padding:18px;
+  overflow-y:auto;
+  max-height:calc(90vh - 80px)
+}
+.formgrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:11px
+}
+label{display:block;font-weight:600}
+label input,label select,label textarea{
+  display:block;
+  margin-top:4px;
+  font-weight:400
+}
+.wide{grid-column:1/-1}
+.formfoot{
+  position:sticky;
+  bottom:-18px;
+  background:white;
+  padding:12px 0 0;
+  display:flex;
+  justify-content:flex-end;
+  gap:8px
+}
+.stars button{
+  font-size:32px;
+  padding:0 6px;
+  color:#c49420;
+  border:0
+}
+.stars button[aria-pressed="true"]{background:#fff3cf}
+.detailimg{
+  width:100%;
+  max-height:300px;
+  object-fit:contain;
+  border-radius:12px
+}
+.toast{
+  position:fixed;
+  bottom:24px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:11px 18px;
+  border-radius:12px;
+  color:white;
+  background:#34445e;
+  z-index:100;
+  width:max-content;
+  max-width:90vw;
+  box-shadow:0 4px 20px #0002
+}
+.hidden{display:none!important}
+small{font-weight:400}
+.notice{
+  background:#fff8e8;
+  padding:10px;
+  border-radius:10px;
+  margin:10px 0
+}
+a{color:#37579b}
+button:focus-visible,a:focus-visible{
+  outline:3px solid var(--theme)
+}
+@media(max-width:1000px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:650px){
+  .wrap{width:100%;padding:0 12px;margin:16px auto}
+  .grid{grid-template-columns:1fr}
+  .formgrid{grid-template-columns:1fr}
+  .wide{grid-column:auto}
+  h1{font-size:21px}
+  .toolbar select{flex:1}
+  .modalbody{padding:14px}
+  .formfoot{bottom:-14px}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div>
+      <h1 id="appName">🎮 쌤들의 수업 게임 놀이터</h1>
+      <p id="description" class="muted"></p>
+    </div>
+    <div class="row">
+      <button id="recommend">＋ 게임 추천</button>
+      <button id="refresh" aria-label="새로고침">↻</button>
+      <button id="adminBtn" aria-label="관리자 로그인">⚙</button>
+      <button id="logout" class="hidden">로그아웃</button>
+    </div>
+  </header>
+
+  <section class="intro">
+    <h2>수업에 재미를 더하는 게임을 찾아보세요</h2>
+    <p class="muted">
+      게임을 실행하고, 문제 템플릿을 활용하고,
+      수업 경험을 별점으로 나눠 주세요.
+    </p>
+  </section>
+
+  <section class="toolbar" aria-label="게임 검색">
+    <input id="search"
+      placeholder="게임 이름 · 소개 · 제작자 검색"
+      aria-label="검색어">
+    <select id="category" aria-label="게임 유형">
+      <option value="">모든 유형</option>
+    </select>
+    <select id="grade" aria-label="추천 학년">
+      <option value="">모든 학년</option>
+    </select>
+    <select id="sort" aria-label="정렬">
+      <option value="latest">최신순</option>
+      <option value="rating">별점 높은 순</option>
+      <option value="count">평가 많은 순</option>
+      <option value="featured">추천·표시 순서</option>
+    </select>
+  </section>
+
+  <p id="count" class="muted" aria-live="polite"></p>
+
+  <section id="games" class="grid">
+    <div class="empty">불러오는 중…</div>
+  </section>
+
+  <nav id="pager" class="pager" aria-label="페이지 이동"></nav>
+
+  <section id="adminPanel" class="panel hidden">
+    <h2>⚙ 관리자</h2>
+    <div id="tabs" class="tabs"></div>
+    <div id="adminContent"></div>
+  </section>
+
+  <footer id="footer"></footer>
+</main>
+
+<dialog id="modal" aria-labelledby="modalTitle">
+  <div class="modalhead">
+    <h2 id="modalTitle"></h2>
+    <button id="closeModal" aria-label="닫기">✕</button>
+  </div>
+  <div id="modalBody" class="modalbody"></div>
+</dialog>
+
+<div id="toast" class="toast hidden"
+  role="status" aria-live="polite"></div>
+
+<script>
+// GitHub에서는 실제 GAS 배포 /exec 주소로 변경하세요.
+// GAS 내부 실행에서는 사용하지 않습니다.
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxqPAHDWUfSONWaItyO6aa_CRLpi6ccL2Hvgkr6m8BBc0bv-lISvLStOaVpTODfXyVxdQ/exec';
+
+const $ = id => document.getElementById(id);
+
+const esc = v => String(v ?? '').replace(
+  /[&<>"']/g,
+  c => ({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[c])
+);
+
+const yes = v =>
+  v === true || String(v).toUpperCase() === 'TRUE';
+
+const safeUrl = v =>
+  /^https?:\/\/[^\s<>"']+$/i.test(String(v || ''))
+    ? String(v)
+    : '';
+
+const link = (url, label) => safeUrl(url)
+  ? `<a class="btn" href="${esc(url)}"
+      target="_blank" rel="noopener noreferrer">
+      ${esc(label)} ↗
+     </a>`
+  : '';
+
+function imageUrl(url) {
+  if (!safeUrl(url)) return '';
+
+  const m = String(url).match(
+    /drive\.google\.com\/(?:file\/d\/([^/?]+)|[^#]*[?&]id=([^&]+))/
+  );
+
+  return m
+    ? 'https://drive.google.com/thumbnail?id=' +
+      encodeURIComponent(m[1] || m[2]) + '&sz=w1000'
+    : url;
+}
+
+let visitorId;
+
+try {
+  visitorId = localStorage.getItem('gameVisitor');
+
+  if (!/^[a-zA-Z0-9_-]{16,100}$/.test(visitorId || '')) {
+    visitorId = crypto.randomUUID();
+    localStorage.setItem('gameVisitor', visitorId);
+  }
+} catch (e) {
+  visitorId = crypto.randomUUID();
+}
+
+let state = {
+  settings: {},
+  games: [],
+  categories: [],
+  templates: []
+};
+
+let admin = null;
+let token = '';
+let page = 1;
+let tab = 'games';
+let toastTimer;
+let modalBusy = false;
+let loading = false;
+
+const insideGAS = !!(
+  window.google && google.script && google.script.run
+);
+
+let bridgeWindow = null;
+let bridgeOrigin = '';
+let bridgeReady = null;
+const pending = new Map();
+
+function connectBridge() {
+  if (bridgeReady) return bridgeReady;
+
+  bridgeReady = new Promise((resolve, reject) => {
+    if (
+      !/^https:\/\/script\.google\.com\/macros\/s\/[^/]+\/exec$/
+        .test(WEB_APP_URL)
+    ) {
+      reject(new Error(
+        'index.html의 WEB_APP_URL을 실제 GAS /exec 배포 주소로 설정해 주세요.'
+      ));
+      return;
+    }
+
+    const frame = document.createElement('iframe');
+    frame.hidden = true;
+    frame.title = 'GAS 데이터 연결';
+
+    const timeout = setTimeout(() => {
+      reject(new Error(
+        'GAS 연결 시간이 초과되었습니다. 배포의 접근 권한, GITHUB_ORIGINS 설정, 브라우저의 타사 쿠키 차단 여부를 확인한 뒤 새로고침해 주세요.'
+      ));
+    }, 30000);
+
+    const listener = event => {
+      if (
+        !/^https:\/\/(?:script\.google\.com|[a-zA-Z0-9-]+\.googleusercontent\.com)$/
+          .test(event.origin)
+      ) {
+        return;
+      }
+
+      const d = event.data;
+
+      if (!d || d.channel !== 'game-playground') return;
+
+      if (d.kind === 'ready' && !bridgeWindow) {
+        // ready를 보낸 창이 이 앱의 iframe 내부인지 확인합니다.
+        let belongs = false;
+
+        try {
+          belongs =
+            event.source.top === window &&
+            event.source.parent === frame.contentWindow;
+        } catch (e) {}
+
+        if (!belongs) return;
+
+        bridgeWindow = event.source;
+        bridgeOrigin = event.origin;
+        clearTimeout(timeout);
+        resolve();
+      } else if (
+        d.kind === 'response' &&
+        event.source === bridgeWindow &&
+        event.origin === bridgeOrigin
+      ) {
+        const p = pending.get(d.id);
+
+        if (!p) return;
+
+        pending.delete(d.id);
+        clearTimeout(p.timer);
+
+        if (d.error) {
+          p.reject(new Error(d.error));
+        } else {
+          p.resolve(d.result);
+        }
+      }
+    };
+
+    window.addEventListener('message', listener);
+
+    frame.src = WEB_APP_URL + '?bridge=1';
+    document.body.appendChild(frame);
+  });
+
+  return bridgeReady;
+}
+
+async function rpc(name, ...args) {
+  if (insideGAS) {
+    return new Promise((resolve, reject) => {
+      google.script.run
+        .withSuccessHandler(resolve)
+        .withFailureHandler(e => {
+          reject(new Error(
+            e.message || '처리 중 오류가 발생했습니다.'
+          ));
+        })[name](...args);
+    });
+  }
+
+  await connectBridge();
+
+  return new Promise((resolve, reject) => {
+    const id = crypto.randomUUID();
+
+    const timer = setTimeout(() => {
+      pending.delete(id);
+      reject(new Error(
+        '응답이 늦어지고 있습니다. 저장 작업은 완료되었을 수 있으니 새로고침 후 확인해 주세요.'
+      ));
+    }, 45000);
+
+    pending.set(id, { resolve, reject, timer });
+
+    bridgeWindow.postMessage({
+      channel: 'game-playground',
+      kind: 'request',
+      id,
+      method: name,
+      args
+    }, bridgeOrigin);
+  });
+}
+
+function toast(message) {
+  $('toast').textContent = message;
+  $('toast').classList.remove('hidden');
+
+  clearTimeout(toastTimer);
+
+  toastTimer = setTimeout(() => {
+    $('toast').classList.add('hidden');
+  }, 4500);
+}
+
+function openModal(title, html) {
+  $('modalTitle').textContent = title;
+  $('modalBody').innerHTML = html;
+  modalBusy = false;
+
+  if (!$('modal').open) $('modal').showModal();
+}
+
+function closeModal() {
+  if (!modalBusy) $('modal').close();
+}
+
+$('closeModal').onclick = closeModal;
+
+$('modal').addEventListener('cancel', e => {
+  if (modalBusy) e.preventDefault();
+});
+
+async function busy(button, fn) {
+  if (button.disabled) return;
+
+  const label = button.textContent;
+  button.disabled = true;
+  button.textContent = '처리 중…';
+
+  const inModal = $('modal').contains(button);
+
+  if (inModal) modalBusy = true;
+
+  try {
+    await fn();
+  } catch (e) {
+    toast(e.message);
+  } finally {
+    button.disabled = false;
+    button.textContent = label;
+
+    if (inModal) modalBusy = false;
+  }
+}
+
+function options(items, value) {
+  return items.map(([v, l]) =>
+    `<option value="${esc(v)}"
+      ${String(value) === String(v) ? 'selected' : ''}>
+      ${esc(l)}
+     </option>`
+  ).join('');
+}
+
+function input(
+  name, label, value = '', required = false, type = 'text'
+) {
+  return `
+    <label>
+      ${esc(label)}${required ? ' *' : ''}
+      <input name="${name}" type="${type}"
+        value="${esc(value)}"
+        ${required ? 'required' : ''}
+        maxlength="2000">
+    </label>`;
+}
+
+function select(name, label, items, value) {
+  return `
+    <label>
+      ${esc(label)}
+      <select name="${name}">
+        ${options(items, value)}
+      </select>
+    </label>`;
+}
+
+function area(name, label, value = '', required = false) {
+  return `
+    <label class="wide">
+      ${esc(label)}${required ? ' *' : ''}
+      <textarea name="${name}"
+        ${required ? 'required' : ''}
+        maxlength="5000">${esc(value)}</textarea>
+    </label>`;
+}
+
+function foot(label = '저장') {
+  return `
+    <div class="formfoot wide">
+      <button type="button" data-close>취소</button>
+      <button class="primary" type="submit">
+        ${esc(label)}
+      </button>
+    </div>`;
+}
+
+function bindForm(handler) {
+  const form = $('modalBody').querySelector('form');
+
+  form.querySelector('[data-close]')
+    ?.addEventListener('click', closeModal);
+
+  form.onsubmit = e => {
+    e.preventDefault();
+
+    busy(
+      form.querySelector('[type=submit]'),
+      () => handler(
+        Object.fromEntries(new FormData(form))
+      )
+    );
+  };
+}
+
+async function load(initial = false) {
+  if (loading) return;
+
+  loading = true;
+  $('refresh').disabled = true;
+
+  try {
+    const data = await rpc('getPublicData');
+    state = data;
+
+    const s = data.settings;
+
+    document.title =
+      s.appName || '쌤들의 수업 게임 놀이터';
+
+    $('appName').textContent = '🎮 ' + document.title;
+    $('description').textContent = s.siteDescription;
+    $('footer').textContent = s.footerText;
+
+    document.documentElement.style.setProperty(
+      '--theme',
+      /^#[0-9a-f]{6}$/i.test(s.themeColor)
+        ? s.themeColor
+        : '#8ba9e8'
+    );
+
+    $('recommend').classList.toggle(
+      'hidden', !s.allowSubmissions
+    );
+
+    const cat = $('category').value;
+    const gr = $('grade').value;
+
+    $('category').innerHTML = options([
+      ['', '모든 유형'],
+      ...data.categories
+        .sort((a, b) =>
+          Number(a.displayOrder) - Number(b.displayOrder)
+        )
+        .map(c => [
+          c.categoryId,
+          c.icon + ' ' + c.categoryName
+        ])
+    ], cat);
+
+    $('grade').innerHTML = options([
+      ['', '모든 학년'],
+      ...[
+        ...new Set(
+          data.games.map(g => String(g.grade))
+            .filter(Boolean)
+        )
+      ].map(g => [g, g])
+    ], gr);
+
+    if (initial) {
+      $('sort').value = [
+        'latest', 'rating', 'count', 'featured'
+      ].includes(s.defaultSort)
+        ? s.defaultSort
+        : 'latest';
+    }
+
+    render();
+  } catch (e) {
+    if (initial) {
+      $('games').innerHTML = `
+        <div class="empty">
+          불러오지 못했습니다.
+          새로고침 버튼을 눌러 주세요.
+        </div>`;
+    }
+
+    toast(e.message);
+  } finally {
+    loading = false;
+    $('refresh').disabled = false;
+  }
+}
+
+function render() {
+  const q = $('search').value.trim().toLowerCase();
+  const cat = $('category').value;
+  const gr = $('grade').value;
+
+  let games = state.games.filter(g =>
+    (!cat || g.categoryId === cat) &&
+    (!gr || String(g.grade) === gr) &&
+    (
+      !q ||
+      [
+        g.title,
+        g.description,
+        g.creatorName,
+        g.creatorSchool,
+        g.subject
+      ].join(' ').toLowerCase().includes(q)
+    )
+  );
+
+  const mode = $('sort').value;
+
+  games.sort((a, b) =>
+    mode === 'rating'
+      ? (
+        b.ratingAverage - a.ratingAverage ||
+        b.ratingCount - a.ratingCount
+      )
+      : mode === 'count'
+      ? (
+        b.ratingCount - a.ratingCount ||
+        b.ratingAverage - a.ratingAverage
+      )
+      : mode === 'featured'
+      ? (
+        Number(yes(b.featured)) -
+        Number(yes(a.featured)) ||
+        Number(a.displayOrder) -
+        Number(b.displayOrder)
+      )
+      : String(b.createdAt)
+        .localeCompare(String(a.createdAt))
+  );
+
+  const size = Math.min(
+    100,
+    Math.max(1, Number(state.settings.gamesPerPage) || 12)
+  );
+
+  const pages = Math.max(
+    1, Math.ceil(games.length / size)
+  );
+
+  page = Math.min(page, pages);
+
+  $('count').textContent =
+    `게임 ${games.length}개 · ${page}/${pages}쪽`;
+
+  $('games').innerHTML = games
+    .slice((page - 1) * size, page * size)
+    .map(g => {
+      const cat = state.categories.find(c =>
+        c.categoryId === g.categoryId
+      );
+
+      const img = imageUrl(g.imageUrl);
+
+      return `
+        <article class="card">
+          ${img
+            ? `<img class="cover"
+                src="${esc(img)}"
+                alt="${esc(g.title)} 스크린샷"
+                loading="lazy"
+                referrerpolicy="no-referrer">`
+            : `<div class="cover placeholder"
+                aria-hidden="true">
+                ${esc(cat?.icon || '🎮')}
+               </div>`
+          }
+          <div class="body">
+            <h3>${esc(g.title)}</h3>
+
+            ${state.settings.showCreator
+              ? `<small class="muted">
+                  제작: ${esc(g.creatorName || '확인 중')}
+                  ${g.creatorSchool
+                    ? ' · ' + esc(g.creatorSchool)
+                    : ''}
+                 </small>`
+              : ''
+            }
+
+            <div class="tags">
+              ${[
+                cat?.categoryName,
+                g.subject,
+                g.grade,
+                g.playMode,
+                yes(g.featured) ? '추천 게임' : ''
+              ].filter(Boolean).map(t =>
+                `<span class="tag">${esc(t)}</span>`
+              ).join('')}
+            </div>
+
+            <p class="clamp pre">${esc(g.description)}</p>
+
+            ${state.settings.enableRatings
+              ? `<div class="rating">
+                  ${g.ratingCount
+                    ? '★ ' +
+                      g.ratingAverage.toFixed(1) +
+                      ' · ' + g.ratingCount + '명 평가'
+                    : '☆☆☆☆☆ 평가 없음'}
+                 </div>`
+              : ''
+            }
+
+            <div class="actions">
+              ${link(g.gameUrl, '게임 실행')}
+              <button data-detail="${esc(g.gameId)}">
+                소개·템플릿${state.settings.enableRatings
+                  ? '·평가'
+                  : ''}
+              </button>
+            </div>
+          </div>
+        </article>`;
+    }).join('') ||
+      '<div class="empty">조건에 맞는 게임이 없습니다.</div>';
+
+  $('games').querySelectorAll('img').forEach(img => {
+    img.onerror = () => {
+      const box = document.createElement('div');
+      box.className = 'cover placeholder';
+      box.textContent = '🎮';
+      img.replaceWith(box);
+    };
+  });
+
+  $('games').querySelectorAll('[data-detail]')
+    .forEach(b => {
+      b.onclick = () => detail(b.dataset.detail);
+    });
+
+  $('pager').innerHTML = pages > 1
+    ? `
+      <button id="prev" ${page <= 1 ? 'disabled' : ''}>
+        이전
+      </button>
+      <span>${page} / ${pages}</span>
+      <button id="next" ${page >= pages ? 'disabled' : ''}>
+        다음
+      </button>`
+    : '';
+
+  if ($('prev')) {
+    $('prev').onclick = () => {
+      page--;
+      render();
+    };
+  }
+
+  if ($('next')) {
+    $('next').onclick = () => {
+      page++;
+      render();
+    };
+  }
+}
+
+async function detail(id) {
+  const g = state.games.find(g => g.gameId === id);
+
+  if (!g) return;
+
+  const templates = state.templates.filter(t =>
+    t.gameId === id
+  );
+
+  const img = imageUrl(g.imageUrl);
+
+  openModal(g.title, `
+    ${img
+      ? `<img class="detailimg" src="${esc(img)}"
+          alt="게임 스크린샷"
+          referrerpolicy="no-referrer">`
+      : ''
+    }
+
+    <p class="pre">${esc(g.description)}</p>
+
+    ${state.settings.showCreator
+      ? `<p>
+          제작: ${esc(g.creatorName || '확인 중')}
+          ${esc(g.creatorSchool || '')}
+         </p>
+         ${link(g.creatorUrl, '제작자 홈페이지')}`
+      : ''
+    }
+
+    <p>${link(g.gameUrl, '게임 실행')}</p>
+
+    ${state.settings.showTemplates
+      ? `<h3>📋 문제 템플릿</h3>
+         ${templates.map(t => `
+           <div class="panel">
+             <strong>${esc(t.templateTitle)}</strong>
+             <p class="pre">${esc(t.description)}</p>
+             <small>
+               ${esc([
+                 t.subject, t.grade, t.contributor
+               ].filter(Boolean).join(' · '))}
+             </small>
+             <p>${link(t.templateUrl, '템플릿 열기')}</p>
+           </div>
+         `).join('') ||
+           '<p class="muted">등록된 템플릿이 없습니다.</p>'
+         }`
+      : ''
+    }
+
+    ${state.settings.enableRatings
+      ? `<div class="panel">
+          <h3>이 게임은 어떠셨나요?</h3>
+          <p id="ratingInfo">기존 평가를 확인하는 중…</p>
+          <div id="stars" class="stars"
+            role="group" aria-label="별점 선택"></div>
+          <button id="ratingSave"
+            class="primary" disabled>별점 저장</button>
+          <p class="muted">
+            <small>
+              같은 브라우저의 평가는 수정됩니다.
+              다른 기기·브라우저에서는
+              별도 평가로 기록될 수 있습니다.
+            </small>
+          </p>
+         </div>`
+      : ''
+    }
+  `);
+
+  if (!state.settings.enableRatings) return;
+
+  const target = $('ratingSave');
+  let score = 0;
+
+  function draw() {
+    if (
+      !$('stars') ||
+      $('ratingSave') !== target
+    ) return;
+
+    $('stars').innerHTML = [1, 2, 3, 4, 5].map(n =>
+      `<button type="button"
+        aria-label="${n}점"
+        aria-pressed="${score === n}"
+        data-score="${n}">
+        ${n <= score ? '★' : '☆'}
+       </button>`
+    ).join('');
+
+    $('stars').querySelectorAll('button').forEach(b => {
+      b.onclick = () => {
+        score = Number(b.dataset.score);
+        draw();
+      };
+    });
+
+    $('ratingInfo').textContent = score
+      ? `선택한 별점: ${score}점`
+      : '별점을 선택해 주세요.';
+
+    target.disabled = !score;
+  }
+
+  try {
+    score = await rpc('getMyRating', id, visitorId);
+
+    if ($('ratingSave') !== target) return;
+
+    if (score && !state.settings.allowRatingUpdate) {
+      $('ratingInfo').textContent =
+        `이미 ${score}점으로 평가하셨습니다. 현재 수정은 허용하지 않습니다.`;
+      return;
+    }
+
+    draw();
+
+    target.onclick = () => busy(target, async () => {
+      await rpc('saveRating', id, visitorId, score);
+      $('modal').close();
+      toast('별점이 저장되었습니다.');
+      await load();
+    });
+  } catch (e) {
+    if ($('ratingSave') === target) {
+      $('ratingInfo').textContent = e.message;
+    }
+  }
+}
+
+function gameFields(g = {}, recommend = false) {
+  const cats = (
+    recommend ? state.categories : admin.categories
+  ).map(c => [
+    c.categoryId,
+    c.categoryName +
+      (yes(c.isActive) ? '' : ' (비활성)')
+  ]);
+
+  let html =
+    input('title', '게임 이름', g.title, true) +
+    input('creatorName', '제작자 이름', g.creatorName, true) +
+    area(
+      'description',
+      '게임 소개·활용 방법',
+      g.description,
+      true
+    ) +
+    select(
+      'categoryId',
+      '게임 유형',
+      [['', '선택 안 함'], ...cats],
+      g.categoryId
+    ) +
+    input('subject', '교과', g.subject) +
+    input('grade', '추천 학년', g.grade) +
+    input('playMode', '참여 방식', g.playMode) +
+    input(
+      'gameUrl', '게임 실행 링크',
+      g.gameUrl, true, 'url'
+    ) +
+    input(
+      'imageUrl', '스크린샷 이미지 링크',
+      g.imageUrl, false, 'url'
+    ) +
+    input('creatorSchool', '제작자 소속', g.creatorSchool) +
+    input(
+      'creatorUrl', '제작자 홈페이지',
+      g.creatorUrl, false, 'url'
+    ) +
+    input('submitterName', '등록자 이름', g.submitterName) +
+    input(
+      'submitterContact',
+      '등록자 연락처 (관리자만 확인)',
+      g.submitterContact
+    );
+
+  if (recommend) {
+    html += input(
+      'templateUrl',
+      '문제 템플릿 링크 (선택)',
+      g.templateUrl,
+      false,
+      'url'
+    );
+  } else {
+    html +=
+      select(
+        'featured',
+        '추천 게임',
+        [['FALSE', '아니요'], ['TRUE', '예']],
+        String(yes(g.featured)).toUpperCase()
+      ) +
+      input(
+        'displayOrder', '표시 순서',
+        g.displayOrder || 0, false, 'number'
+      ) +
+      select(
+        'status',
+        '공개 상태',
+        [
+          ['PUBLISHED', '공개'],
+          ['DRAFT', '작성 중'],
+          ['HIDDEN', '비공개']
+        ],
+        g.status || 'PUBLISHED'
+      );
+  }
+
+  return html;
+}
+
+$('recommend').onclick = () => {
+  openModal('＋ 게임 추천', `
+    <p class="notice">
+      ${state.settings.requireApproval
+        ? '관리자 승인 후 공개됩니다.'
+        : '추천 즉시 공개됩니다.'}
+      제작자와 출처를 정확히 입력해 주세요.
+      스크린샷은 누구나 볼 수 있는 이미지 링크를 입력합니다.
+    </p>
+    <form>
+      <div class="formgrid">
+        ${gameFields({}, true)}
+        ${foot('추천 제출')}
+      </div>
+    </form>
+  `);
+
+  bindForm(async data => {
+    const r = await rpc('submitGame', data, visitorId);
+    $('modal').close();
+
+    toast(r.approved
+      ? '게임이 공개되었습니다.'
+      : '추천을 접수했습니다. 관리자 승인 후 공개됩니다.'
+    );
+
+    await load();
+  });
+};
+
+$('adminBtn').onclick = () => {
+  if (token) {
+    $('adminPanel').classList.remove('hidden');
+
+    $('adminPanel').scrollIntoView({
+      behavior: 'smooth'
+    });
+
+    refreshAdmin();
+    return;
+  }
+
+  openModal('관리자 로그인', `
+    <form>
+      ${input(
+        'password',
+        '관리자 비밀번호',
+        '',
+        true,
+        'password'
+      )}
+      ${foot('로그인')}
+    </form>
+  `);
+
+  bindForm(async d => {
+    token = await rpc(
+      'loginAdmin', d.password, visitorId
+    );
+
+    $('modal').close();
+    $('logout').classList.remove('hidden');
+    $('adminPanel').classList.remove('hidden');
+
+    await refreshAdmin();
+
+    $('adminPanel').scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+};
+
+$('logout').onclick = () => busy(
+  $('logout'),
+  async () => {
+    await rpc('logoutAdmin', token);
+
+    token = '';
+    admin = null;
+
+    $('logout').classList.add('hidden');
+    $('adminPanel').classList.add('hidden');
+
+    toast('로그아웃했습니다.');
+  }
+);
+
+async function refreshAdmin() {
+  try {
+    admin = await rpc('getAdminData', token);
+    renderAdmin();
+  } catch (e) {
+    toast(e.message);
+  }
+}
+
+const tabs = {
+  games: '게임',
+  templates: '문제 템플릿',
+  categories: '게임 유형',
+  submissions: '추천 승인',
+  ratings: '별점',
+  settings: '기본 설정'
+};
+
+const statusName = {
+  PUBLISHED: '공개',
+  DRAFT: '작성 중',
+  HIDDEN: '비공개',
+  PENDING: '승인 대기',
+  APPROVED: '승인',
+  REJECTED: '반려'
+};
+
+function renderAdmin() {
+  if (!admin) return;
+
+  $('tabs').innerHTML = Object.entries(tabs)
+    .map(([k, v]) =>
+      `<button data-tab="${k}"
+        class="${tab === k ? 'active' : ''}">
+        ${v}
+        ${k === 'submissions'
+          ? ' (' +
+            admin.submissions.filter(s =>
+              s.reviewStatus === 'PENDING'
+            ).length + ')'
+          : ''}
+       </button>`
+    ).join('');
+
+  $('tabs').querySelectorAll('button').forEach(b => {
+    b.onclick = () => {
+      tab = b.dataset.tab;
+      renderAdmin();
+    };
+  });
+
+  if (tab === 'settings') {
+    $('adminContent').innerHTML = `
+      <p>
+        앱 이름, 공개 기능, 기본 정렬, 비밀번호를 수정합니다.
+      </p>
+      <button id="settingsEdit">✎ 설정 수정</button>
+    `;
+
+    $('settingsEdit').onclick = settingsForm;
+    return;
+  }
+
+  const type = {
+    games: 'game',
+    templates: 'template',
+    categories: 'category',
+    ratings: 'rating'
+  }[tab];
+
+  const pk = {
+    games: 'gameId',
+    templates: 'templateId',
+    categories: 'categoryId',
+    submissions: 'submissionId',
+    ratings: 'ratingId'
+  }[tab];
+
+  const rows = admin[tab].slice().sort((a, b) =>
+    tab === 'submissions'
+      ? String(b.submittedAt)
+        .localeCompare(String(a.submittedAt))
+      : 0
+  );
+
+  $('adminContent').innerHTML =
+    (
+      ['games', 'templates', 'categories'].includes(tab)
+        ? '<button id="addItem" class="primary">＋ 추가</button>'
+        : ''
+    ) +
+    rows.map(r => {
+      const game = admin.games.find(g =>
+        g.gameId === r.gameId
+      );
+
+      const title =
+        r.title ||
+        r.templateTitle ||
+        r.categoryName ||
+        `${game?.title || '삭제된 게임'} · ${r.score}점`;
+
+      const status = tab === 'categories'
+        ? yes(r.isActive) ? '사용 중' : '사용 안 함'
+        : statusName[r.status || r.reviewStatus] || '';
+
+      return `
+        <div class="adminrow">
+          <div class="grow">
+            <strong>${esc(title)}</strong>
+            <small class="muted">
+              ${esc(status)}
+              ${tab === 'ratings'
+                ? ' · ' +
+                  esc(String(r.updatedAt).slice(0, 10))
+                : ''}
+            </small>
+          </div>
+
+          ${tab === 'submissions'
+            ? `<button data-review="${esc(r[pk])}">
+                내용·심사
+               </button>`
+            : `
+              ${tab === 'ratings'
+                ? ''
+                : `<button data-edit="${esc(r[pk])}"
+                    aria-label="수정">✎</button>`}
+              <button class="danger"
+                data-delete="${esc(r[pk])}"
+                aria-label="삭제">🗑</button>
+            `}
+        </div>`;
+    }).join('') +
+    (
+      rows.length
+        ? ''
+        : '<p class="muted">등록된 항목이 없습니다.</p>'
+    );
+
+  if ($('addItem')) {
+    $('addItem').onclick = () => editItem(type);
+  }
+
+  $('adminContent').querySelectorAll('[data-edit]')
+    .forEach(b => {
+      b.onclick = () => editItem(
+        type,
+        rows.find(r => r[pk] === b.dataset.edit)
+      );
+    });
+
+  $('adminContent').querySelectorAll('[data-delete]')
+    .forEach(b => {
+      b.onclick = () =>
+        deleteItem(type, b.dataset.delete);
+    });
+
+  $('adminContent').querySelectorAll('[data-review]')
+    .forEach(b => {
+      b.onclick = () => review(
+        rows.find(r => r[pk] === b.dataset.review)
+      );
+    });
+}
+
+async function afterAdmin(message) {
+  $('modal').close();
+  toast(message);
+
+  await load();
+  await refreshAdmin();
+}
+
+function editItem(type, d = {}) {
+  let fields;
+
+  if (type === 'game') {
+    fields = gameFields(d);
+  } else if (type === 'category') {
+    fields =
+      input(
+        'categoryName', '유형 이름',
+        d.categoryName, true
+      ) +
+      input(
+        'icon', '아이콘 (이모지)',
+        d.icon || '🎮'
+      ) +
+      input(
+        'displayOrder', '표시 순서',
+        d.displayOrder || 0, false, 'number'
+      ) +
+      select(
+        'isActive',
+        '사용 여부',
+        [['TRUE', '사용'], ['FALSE', '사용 안 함']],
+        String(yes(
+          d.isActive === undefined ? 'TRUE' : d.isActive
+        )).toUpperCase()
+      );
+  } else {
+    fields =
+      select(
+        'gameId',
+        '게임',
+        admin.games.map(g => [g.gameId, g.title]),
+        d.gameId
+      ) +
+      input(
+        'templateTitle', '템플릿 이름',
+        d.templateTitle, true
+      ) +
+      area('description', '설명', d.description) +
+      input('subject', '교과', d.subject) +
+      input('grade', '추천 학년', d.grade) +
+      input(
+        'templateUrl', '템플릿 링크',
+        d.templateUrl, true, 'url'
+      ) +
+      input('contributor', '공유자', d.contributor) +
+      select(
+        'status',
+        '공개 상태',
+        [['PUBLISHED', '공개'], ['HIDDEN', '비공개']],
+        d.status || 'PUBLISHED'
+      );
+  }
+
+  openModal(
+    '✎ ' + {
+      game: '게임',
+      category: '게임 유형',
+      template: '문제 템플릿'
+    }[type],
+    `<form>
+      <div class="formgrid">
+        ${fields}
+        ${foot()}
+      </div>
+     </form>`
+  );
+
+  bindForm(async data => {
+    await rpc('adminAction', token, 'save', {
+      type,
+      id: d.gameId && type === 'game'
+        ? d.gameId
+        : type === 'category'
+        ? d.categoryId
+        : d.templateId,
+      data
+    });
+
+    await afterAdmin('저장했습니다.');
+  });
+}
+
+function deleteItem(type, id) {
+  openModal('삭제 확인', `
+    <p>
+      ${type === 'game'
+        ? '게임과 연결된 템플릿·별점이 함께 삭제됩니다.'
+        : '이 항목을 삭제하시겠습니까?'}
+      삭제하면 되돌릴 수 없습니다.
+    </p>
+    <form>${foot('삭제')}</form>
+  `);
+
+  bindForm(async () => {
+    await rpc(
+      'adminAction', token, 'delete', { type, id }
+    );
+
+    await afterAdmin('삭제했습니다.');
+  });
+}
+
+function review(r) {
+  openModal('게임 추천 심사', `
+    <h3>${esc(r.title)}</h3>
+    <p class="pre">${esc(r.description)}</p>
+    <p>
+      제작: ${esc(r.creatorName)} ·
+      ${esc(r.creatorSchool)}
+    </p>
+    <p>
+      등록자: ${esc(r.submitterName)} ·
+      ${esc(r.submitterContact)}
+    </p>
+    <p>
+      교과·학년: ${esc(r.subject)} ·
+      ${esc(r.grade)} / ${esc(r.playMode)}
+    </p>
+    <p>
+      ${link(r.gameUrl, '게임 확인')}
+      ${link(r.templateUrl, '템플릿 확인')}
+      ${link(r.imageUrl, '스크린샷 확인')}
+      ${link(r.creatorUrl, '제작자 홈페이지')}
+    </p>
+    <p>
+      상태: ${esc(
+        statusName[r.reviewStatus] || r.reviewStatus
+      )}
+    </p>
+
+    ${r.reviewStatus === 'APPROVED'
+      ? `<p class="notice">
+          이미 승인되었습니다.
+          게임 관리에서 수정할 수 있습니다.
+         </p>`
+      : `<form>
+          <div class="formgrid">
+            ${select(
+              'decision',
+              '심사 결과',
+              [['approve', '승인'], ['reject', '반려']],
+              'approve'
+            )}
+            ${area(
+              'memo', '심사 메모 (내부용)', r.reviewMemo
+            )}
+            ${foot('심사 저장')}
+          </div>
+         </form>`
+    }
+  `);
+
+  if (r.reviewStatus !== 'APPROVED') {
+    bindForm(async d => {
+      await rpc('adminAction', token, 'review', {
+        id: r.submissionId,
+        approve: d.decision === 'approve',
+        memo: d.memo
+      });
+
+      await afterAdmin('심사 결과를 저장했습니다.');
+    });
+  }
+}
+
+function settingsForm() {
+  const s = admin.settings;
+
+  const labels = {
+    appName: '앱 이름',
+    siteDescription: '소개 문구',
+    appVersion: '앱 버전',
+    gamesPerPage: '페이지당 게임 수',
+    footerText: '하단 문구',
+    imageFolderId: 'Drive 이미지 폴더 ID (예약 설정)'
+  };
+
+  let fields = Object.entries(labels)
+    .map(([k, l]) =>
+      input(
+        k,
+        l,
+        s[k],
+        k === 'appName',
+        k === 'gamesPerPage' ? 'number' : 'text'
+      )
+    ).join('');
+
+  fields +=
+    input(
+      'themeColor',
+      '테마 색상',
+      /^#[0-9a-f]{6}$/i.test(s.themeColor)
+        ? s.themeColor
+        : '#8ba9e8',
+      false,
+      'color'
+    ) +
+    select(
+      'defaultSort',
+      '기본 정렬',
+      [
+        ['latest', '최신순'],
+        ['rating', '별점 높은 순'],
+        ['count', '평가 많은 순'],
+        ['featured', '추천·표시 순서']
+      ],
+      s.defaultSort
+    );
+
+  const bools = {
+    allowSubmissions: '게임 추천 허용',
+    requireApproval: '관리자 승인 후 공개',
+    enableRatings: '별점 사용',
+    allowRatingUpdate: '별점 수정 허용',
+    showCreator: '제작자 표시',
+    showTemplates: '템플릿 표시'
+  };
+
+  fields += Object.entries(bools)
+    .map(([k, l]) =>
+      select(
+        k,
+        l,
+        [['TRUE', '켜기'], ['FALSE', '끄기']],
+        String(yes(s[k])).toUpperCase()
+      )
+    ).join('') +
+    input(
+      'adminPassword',
+      '새 관리자 비밀번호 (변경할 때만 입력)',
+      '',
+      false,
+      'password'
+    );
+
+  openModal('기본 설정', `
+    <p class="muted">
+      비밀번호를 변경하면 다시 로그인해야 합니다.
+      이미지 폴더 ID는 기존 DB와의 호환을 위해 보존하며,
+      이 버전은 이미지 링크 등록 방식입니다.
+    </p>
+    <form>
+      <div class="formgrid">
+        ${fields}
+        ${foot()}
+      </div>
+    </form>
+  `);
+
+  bindForm(async d => {
+    await rpc('adminAction', token, 'settings', d);
+
+    if (d.adminPassword) {
+      token = '';
+      admin = null;
+
+      $('logout').classList.add('hidden');
+      $('adminPanel').classList.add('hidden');
+      $('modal').close();
+
+      toast(
+        '설정을 저장했습니다. 새 비밀번호로 로그인해 주세요.'
+      );
+
+      await load();
+    } else {
+      await afterAdmin('설정을 저장했습니다.');
+    }
+  });
+}
+
+$('search').oninput = () => {
+  page = 1;
+  render();
+};
+
+['category', 'grade', 'sort'].forEach(id => {
+  $(id).onchange = () => {
+    page = 1;
+    render();
+  };
+});
+
+$('refresh').onclick = async () => {
+  await load();
+
+  if (token) await refreshAdmin();
+};
+
+load(true);
+</script>
+</body>
+</html>
