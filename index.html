@@ -165,9 +165,12 @@ function connectBridge() {
         let belongs = false;
 
         try {
-          belongs =
-            event.source.top === window &&
-            event.source.parent === frame.contentWindow;
+          let source = event.source;
+          for (let depth = 0; depth < 8 && source; depth++) {
+            if (source === frame.contentWindow) { belongs = true; break; }
+            if (source === window || source.parent === source) break;
+            source = source.parent;
+          }
         } catch (e) {}
 
         if (!belongs) return;
@@ -359,7 +362,7 @@ function bindForm(handler) {
   };
 }
 function screenshotFields(url='') {
-  return `<div class="wide"><label>🖼️ 게임 스크린샷 <small>(선택)</small></label><div class="uploadbox" id="shotZone" tabindex="0" aria-label="스크린샷 붙여넣기 영역"><div class="uploadicon" aria-hidden="true">📸</div><strong>게임 화면을 보여 주세요</strong><p class="muted">이 영역을 클릭한 뒤 <b>Ctrl+V</b>로 붙여넣거나<br>이미지 파일을 끌어다 놓으세요.</p><input type="file" id="shotFile" accept="image/png,image/jpeg,image/webp" hidden><div class="uploadbuttons"><button type="button" id="shotPick">📁 파일 선택</button><button type="button" id="shotRemove">✕ 이미지 제거</button></div><img id="shotPreview" class="shotpreview hidden" alt="첨부 이미지 미리보기"><div id="shotMeta" class="uploadmeta" aria-live="polite">PNG · JPG · WebP / 원본 15MB 이하 · 자동 크기 조정</div><details class="imagelink"><summary>🔗 이미지 링크로 등록하기</summary><input name="imageUrl" type="url" value="${esc(url)}" placeholder="https://…" aria-label="이미지 링크"></details></div></div>`;
+  return `<div class="wide"><label>🖼️ 게임 스크린샷 <small>(선택)</small></label><div class="uploadbox" id="shotZone" tabindex="0" aria-label="스크린샷 붙여넣기 영역"><div class="uploadicon" aria-hidden="true">📸</div><strong>게임 화면을 보여 주세요</strong><p class="muted">이 영역을 클릭한 뒤 <b>Ctrl+V</b>로 붙여넣거나<br>이미지 파일을 끌어다 놓으세요.</p><input type="file" id="shotFile" accept="image/png,image/jpeg,image/webp" hidden><div class="uploadbuttons"><button type="button" id="shotPick">📁 파일 선택</button><button type="button" id="shotRemove">✕ 이미지 제거</button></div><img id="shotPreview" class="shotpreview hidden" alt="첨부 이미지 미리보기"><div id="shotMeta" class="uploadmeta" aria-live="polite">PNG · JPG · WebP / 원본 15MB 이하 · 자동 크기 조정</div><details class="imagelink"><summary>🔗 이미지 링크로 등록하기</summary><input name="imageUrl" type="url" value="${esc(url)}" placeholder="이미지 주소를 입력하세요" aria-label="이미지 링크"></details></div></div>`;
 }
 async function prepareScreenshot(file) {
   if (!file || !['image/png','image/jpeg','image/webp'].includes(file.type)) throw new Error('PNG, JPG, WebP 이미지를 선택해 주세요.');
